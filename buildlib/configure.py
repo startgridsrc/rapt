@@ -11,12 +11,13 @@ class Configuration(object):
         self.version = None
         self.numeric_version = None
         self.orientation = None
-        self.permissions = [ "INTERNET", "VIBRATE" ]        
+        self.permissions = []        
         self.include_pil = False
         self.include_sqlite = False
-        self.layout = None
+        self.layout = "internal"
         self.source = False
         self.expansion = False
+	self.targetsdk = 26
         
         try:
             with file(os.path.join(directory, ".android.json"), "r") as f:
@@ -79,9 +80,13 @@ This should be the human-readable version that you would present to a person."""
 
 This should be an integer number, and the value should increase between versions.""", config.numeric_version)    
 
+    config.targetsdk = interface.input("""What is the targetsdk version of the app? 
+
+This should be an integer number, for example API 28 for targeting android Pie (9.0).""", config.targetsdk)
+
     config.orientation = interface.choice("How would you like your application to be displayed?", [
-            ("landscape", "In landscape mode."),
-            ("portrait", "In portrait mode."),
+            ("sensorLandscape", "In landscape mode."),
+            ("sensorPortrait", "In portrait mode."),
         ], config.orientation)
 
     config.expansion = interface.choice("Would you like to create an expansion APK?", [
@@ -101,7 +106,7 @@ This should be an integer number, and the value should increase between versions
 
         permissions = " ".join(config.permissions)
         permissions = interface.input("""\
-What permissions should your application have? Possible permissions are:
+What permissions should your application have? Possible permissions include:
 
 INTERNET (network access), VIBRATE (vibration control).
     
@@ -110,6 +115,22 @@ Please enter a space-separated list of permissions.""", permissions)
     
         config.include_sqlite = interface.yesno("Do you want to include SQLite3 with your application?", config.include_sqlite)
         config.include_pil = interface.yesno("Do you want to include the Python Imaging Library (PIL) with your application?", config.include_pil)
+        
+    if renpy:
+        
+        if not config.expansion:
+            internet = "INTERNET" in config.permissions
+            internet = interface.yesno("Do you want to allow the app to access the Internet?", internet)
+        else:
+            internet = False # included in template.
+            
+        permissions = [ i for i in config.permissions if i not in [ "INTERNET" ] ]
+        
+        if internet:
+            permissions.append("INTERNET")
+            
+        config.permissions = permissions
+        
         
     config.save(directory)
     
