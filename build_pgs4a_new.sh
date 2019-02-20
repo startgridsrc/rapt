@@ -25,7 +25,7 @@ rm -rf src/libs
 export ANDROIDSDK="$ROOT/android-sdk"
 export ANDROIDNDK="$ROOT/android-ndk"
 export ANDROIDNDKVER=r13b
-export ANDROIDAPI=9
+export ANDROIDAPI=21
 
 # Build the python-for-android distro.
 try cd "$ROOT/python-for-android"
