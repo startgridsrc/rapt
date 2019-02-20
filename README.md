@@ -1,3 +1,5 @@
+This fork of the Ren'Py Android Packaging Tool can be used to build the shared libraries for [pgs4a](https://github.com/startgridsrc/pgs4a).
+
 ## How to build a pgs4a distribution
 
 Follow these instructions:
@@ -10,17 +12,18 @@ Follow these instructions:
     - this version still uses old headers so it will work with our toolchain, newer versions require edits
     - it can build apps with minimum android-9 platform API
 3. Download android SDK
-    - this may not be necessary at this time, but in case the toolchain needs it, api-9 could be installed in it, using ./sdkmanager "platforms;android-9"
+    - this may not be necessary at this time, but in case the toolchain needs it, api-9 could be installed in it, using `./sdkmanager "platforms;android-9"`
     - sdk tools version 25.2.5 or older is even nicer; this will be used later when building apps, because android commands are still supported, and it has a nice GUI to install packages
-4. Use pip install cython==0.20 to install older cython version, to avoid errors with jnius
-4. Run ./build_pgs4a_new.sh. A pgs4a dist should be created in /dist
+4. Use `pip install cython==0.20` to install older cython version, to avoid errors with jnius
+4. Run `./build_pgs4a_new.sh`. A pgs4a dist should be created in */dist*
 5. When something fails, most likely some paths have to be edited, for example in build_pgs4a_new.sh, /python-for-android/distribute_new.sh so all path match with the downloaded NDK
+6. The master branch outputs 32-bit libraries. Checkout the 64-bit branches (both here and p4a) to create 64-bit libs (then you'll get an *arm64-v8a* folder in *dist/pgs4/libs*, apps on Google Play soon needs to have both 32 and 64-bit libs).
 
 Now it's time to use the pgs4a dist!
 
-## Used repositories
+## Changelog
 
-The following repositories where clones and edited:
+The following repositories where cloned and edited:
 
 * https://github.com/renpy/rapt
 
