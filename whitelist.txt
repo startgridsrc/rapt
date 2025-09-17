@@ -89,6 +89,8 @@
 /lib/python2.7/locale.pyo
 /lib/python2.7/gettext.pyo
 /lib/python2.7/decimal.pyo
+/lib/python2.7/csv.pyo
+/lib/python2.7/json/**
 
 /lib/python2.7/site-packages/pygame/**
 /lib/python2.7/site-packages/pyjnius/**
